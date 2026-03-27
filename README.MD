@@ -1,39 +1,131 @@
-# Poradnik: Podstawy Markdown
+# 📘 Projekt PHP – Wyświetlanie danych o zwierzętach
 
-Markdown to prosty język znaczników, który służy do formatowania tekstu. Poniżej znajdziesz ściągawkę z najważniejszych funkcji.
+## 📋 Opis projektu
 
----
+Aplikacja napisana w PHP, która łączy się z bazą danych MySQL i wyświetla dane o zwierzętach w formie tabeli HTML.
 
-## 1. Nagłówki
-Używamy znaku # i spacji przed tekstem.
-# Nagłówek H1
-## Nagłówek H2
-### Nagłówek H3
+Dane pobierane są z tabeli `zwierzeta` i obejmują m.in. gatunek, występowanie oraz obraz.
 
 ---
 
-## 2. Formatowanie tekstu
-Możesz wyróżniać tekst za pomocą gwiazdek:
-* **Pogrubienie**: używamy dwóch gwiazdek `**tekst**`
-* *Kursywa*: używamy jednej gwiazdki `*tekst*`
-* **_Pogrubiona kursywa_**: używamy trzech gwiazdek `***tekst***`
+## ⚙️ Wymagania
+
+Aby uruchomić projekt, potrzebujesz:
+
+* PHP (np. XAMPP / WAMP / LAMP)
+* MySQL
+* Przeglądarka internetowa
 
 ---
 
-## 3. Listy
-Aby stworzyć listę, używamy gwiazdki i spacji:
-* Punkt pierwszy
-* Punkt drugi
-* Punkt trzeci
+## 🗄️ Konfiguracja bazy danych
+
+1. Utwórz bazę danych o nazwie:
+
+```
+bazamyk
+```
+
+2. Utwórz tabelę:
+
+```
+zwierzeta
+```
+
+3. Struktura tabeli:
+
+```sql
+CREATE TABLE zwierzeta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    gromady_id INT,
+    odzywianie_id INT,
+    gatunek VARCHAR(255),
+    wystepowanie VARCHAR(255),
+    czy_zagrozony VARCHAR(50),
+    obraz VARCHAR(255)
+);
+```
+
+4. (Opcjonalnie) dodaj przykładowe dane:
+
+```sql
+INSERT INTO zwierzeta 
+(gromady_id, odzywianie_id, gatunek, wystepowanie, czy_zagrozony, obraz)
+VALUES 
+(1, 2, 'Lew', 'Afryka', 'Tak', 'lew.jpg');
+```
 
 ---
 
-## 4. Kod i komendy
-Bardzo ważne dla programistów:
-* Kod wewnątrz zdania: używamy pojedynczego grawisu: `git status`
-* Blok kodu: używamy trzech grawisów nad i pod kodem:
+## 🚀 Uruchomienie
 
-```bash
-git add .
-git commit -m "Pierwszy commit"
-git push origin main
+1. Umieść plik `index.php` w katalogu serwera (np. `htdocs`)
+2. Uruchom Apache i MySQL
+3. Otwórz w przeglądarce:
+
+```
+http://localhost/index.php
+```
+
+---
+
+## 🔍 Jak działa aplikacja
+
+* Łączy się z bazą danych:
+
+```php
+$conn = new mysqli("localhost", "root", "", "bazamyk");
+```
+
+* Pobiera wszystkie rekordy:
+
+```sql
+SELECT * FROM zwierzeta
+```
+
+* Wyświetla dane w tabeli HTML zawierającej:
+
+  * ID
+  * ID gromady
+  * ID odżywiania
+  * Gatunek
+  * Występowanie
+  * Informację o zagrożeniu
+  * Obraz
+
+---
+
+## 🖼️ Obsługa obrazów
+
+* Ścieżka do obrazu jest przechowywana w bazie danych
+* Obraz wyświetlany jest za pomocą:
+
+```html
+<img src="ścieżka_do_pliku">
+```
+
+* Upewnij się, że pliki graficzne znajdują się w odpowiednim katalogu
+
+---
+
+## ⚠️ Uwagi
+
+* Brak zabezpieczeń (np. przed SQL Injection)
+* Brak obsługi błędów połączenia z bazą
+* Dane wyświetlane są bez walidacji
+
+---
+
+## 🔧 Możliwe ulepszenia
+
+* Prepared statements
+* Obsługa błędów (`try/catch`)
+* Lepsze stylowanie (np. Bootstrap)
+* Formularz dodawania danych
+* Filtrowanie i sortowanie
+
+---
+
+## 👨‍💻 Autor
+
+Projekt edukacyjny w PHP.
